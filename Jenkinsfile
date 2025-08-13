@@ -33,7 +33,7 @@ pipeline{
                 script{
                     withCredentials([file (credentialsId : 'kubeconfig', variable: 'KUBECONFIG_FILE')]){
                         export KUBECONFIG=$KUBECONFIG_FILE
-                        def TAG="${env.BUIULD_NUMBER}"
+                        TAG="${env.BUIULD_NUMBER}"
                         sed "s/BUILD_NUMBER_PLACEHOLDER/${TAG}/g" k8s/deployment.yaml > k8s/deployment.applied.yaml
                         kubectl apply -f k8s/deployment.applied.yaml
                         kubectl apply -f k8s/service.yaml
