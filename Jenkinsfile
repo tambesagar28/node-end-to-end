@@ -6,7 +6,7 @@ pipeline{
     stages{
 
         stage('Checkout'){
-            step{
+            steps{
                 Checkout scm
             }
         }
@@ -32,11 +32,13 @@ pipeline{
             steps{
                 script{
                     withCredentials([file (credentialsId : 'kubeconfig', variable: 'KUBECONFIG_FILE')]){
+                        sh '''
                         export KUBECONFIG=$KUBECONFIG_FILE
                         TAG="${env.BUIULD_NUMBER}"
                         sed "s/BUILD_NUMBER_PLACEHOLDER/${TAG}/g" k8s/deployment.yaml > k8s/deployment.applied.yaml
                         kubectl apply -f k8s/deployment.applied.yaml
                         kubectl apply -f k8s/service.yaml
+                        '''
 
                     }
                 }
