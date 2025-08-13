@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-api-app
+  labels:
+    lang: node
+    app: node-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      tier: prod
+      app: node-api
+  template:
+    metadata:
+      labels:
+        tier: prod
+        app:  node-api
+    spec:
+      containers:
+        - name: node-api
+          image: tambesagar28/node-api:BUILD_NUMBER_PLACEHOLDER
+          imagePullPolicy: Always
+          ports:
+            containerPort: 3000
+          resources:
+            request:
+              cpu: 100m
+              memory: 128Mi
+    
