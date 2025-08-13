@@ -6,7 +6,7 @@ WORKDIR /app
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 # copy package files first for layer caching
-COPY package.json .
+COPY package.json package-lock.json* .
 
 # install dependencies (CI-friendly) : Installs exactly what’s in package-lock.json (no updates).
 RUN npm ci --production=false
@@ -20,6 +20,8 @@ COPY . .
 # --- final image ---
 FROM node:22-alpine
 WORKDIR     /app
+
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 # copy only production dependencies from builder
 COPY --from=builder /app/node_modules ./node_modules
