@@ -22,7 +22,7 @@ spec:
           image: tambesagar28/node-api:BUILD_NUMBER_PLACEHOLDER
           imagePullPolicy: Always
           ports:
-            containerPort: 3000
+            - containerPort: 3000
           resources:
             request:
               cpu: 100m
