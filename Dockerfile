@@ -9,7 +9,7 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 COPY package.json package-lock.json* .
 
 # install dependencies (CI-friendly) : Installs exactly what’s in package-lock.json (no updates).
-RUN npm ci --production=false
+RUN echo "Conflect test"
 
 # copy app sources
 COPY . .
